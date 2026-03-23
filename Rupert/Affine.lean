@@ -14,6 +14,7 @@ import Mathlib.Geometry.Euclidean.Projection
 def IsAffineRupertPair {P : Type*} {V : Type*} [MetricSpace P] [NormedAddCommGroup V]
     [InnerProductSpace ℝ V] [NormedAddTorsor V P] [FiniteDimensional ℝ V]
     (inner outer : Set P) : Prop :=
+    letI : OrderTop (AffineSubspace ℝ P) := AffineSubspace.instCompleteLattice.toOrderTop
     ∃ (inner_isometry outer_isometry : AffineIsometry ℝ P P)
       (Q : AffineSubspace ℝ P) (_ : Nonempty Q) (_ : IsCoatom Q),
     let proj := EuclideanGeometry.orthogonalProjection Q
