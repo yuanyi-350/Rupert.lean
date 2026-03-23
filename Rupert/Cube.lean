@@ -29,13 +29,13 @@ abbrev outer_rot : Matrix (Fin 3) (Fin 3) ℝ :=
    (1/√6) • outer_rot_denorm
 
 private
-lemma outer_rot_o3_lemma1 : (star outer_rot_denorm) * outer_rot_denorm = 6 • 1 := by
+lemma outer_rot_o3_lemma1 : (star outer_rot_denorm) * outer_rot_denorm = (6 : ℝ) • 1 := by
   (ext i j; fin_cases i, j) <;>
   · simp only [mul_apply, of_apply, cons_val', star_apply, Fin.sum_univ_three, cons_val]
     norm_num
 
 private
-lemma outer_rot_o3_lemma2 : (outer_rot_denorm) * (star outer_rot_denorm) = 6 • 1 := by
+lemma outer_rot_o3_lemma2 : (outer_rot_denorm) * (star outer_rot_denorm) = (6 : ℝ) • 1 := by
   (ext i j; fin_cases i, j) <;>
   · simp only [mul_apply, of_apply, cons_val', star_apply, Fin.sum_univ_three, cons_val]
     try norm_num
@@ -57,11 +57,11 @@ lemma outer_rot_so3 : outer_rot ∈ SO3 := by
  constructor
  · constructor
    · rw [star_smul, Matrix.smul_mul, Matrix.mul_smul, outer_rot_o3_lemma1, smul_smul]
-     simp only [one_div, star_trivial, nsmul_eq_mul, Nat.cast_ofNat, mul_one]
-     rw [← h, smul_smul, h2, one_smul]
+     simp only [one_div, star_trivial]
+     rw [smul_smul, h2, one_smul]
    · rw [star_smul, Matrix.smul_mul, Matrix.mul_smul, outer_rot_o3_lemma2, smul_smul]
-     simp only [one_div, star_trivial, nsmul_eq_mul, Nat.cast_ofNat, mul_one]
-     rw [← h, smul_smul, h2, one_smul]
+     simp only [one_div, star_trivial]
+     rw [smul_smul, h2, one_smul]
  · have : (Fin.succAbove 2 1 : Fin 3) = 1 := by rfl
    simp_all only [one_div, Matrix.smul_of, mul_zero,
      Matrix.det_succ_row_zero,
@@ -238,9 +238,9 @@ theorem rnn_contains_cube2 : rnn 0 < 1 ∧ rnn 1 < 1 := by
      PiLp.add_apply, PiLp.smul_apply, smul_eq_mul]
  constructor
  · have : 0 < 3 / 4 * (1 / √6 * (√3 * 2)) + 1 / 4 * (1 / √6 * 0) + 1 := by positivity
-   lia
+   nlinarith
  · have : 0 < 3 / 4 * (1 / √6 * 2) + 1 / 4 * (1 / √6 * 4) + 1 := by positivity
-   lia
+   nlinarith
 
 ---------------------------------------------------------------------------------
 
